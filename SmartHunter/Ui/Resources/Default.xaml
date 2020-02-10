@@ -3,11 +3,11 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d"
-                    
+
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:pfComponentModel="clr-namespace:System.ComponentModel;assembly=PresentationFramework"
                     xmlns:wbComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-                    
+
                     xmlns:converters="clr-namespace:SmartHunter.Ui.Converters"
                     xmlns:coreData="clr-namespace:SmartHunter.Core.Data"
                     xmlns:data="clr-namespace:SmartHunter.Game.Data"
@@ -27,10 +27,10 @@
     <converters:EnumComparisonConverter x:Key="A_Converter_EnumComparison" />
     <converters:ColorTransformConverter x:Key="A_Converter_BackgroundColorTransform" SaturationAdjustment="-0.8" BrightnessAdjustment="0.66" OpacityOverride="0.3" />
     <converters:StringFormatConverter x:Key="A_Converter_StringFormat" />
-    
+
     <Color x:Key="A_Color_Widget_Background">#00000000</Color>
     <system:Double x:Key="A_Double_Widget_Opacity">1</system:Double>
-    
+
     <Color x:Key="A_Color_Player_0">#BB3333</Color>
     <Color x:Key="A_Color_Player_1">#3366CC</Color>
     <Color x:Key="A_Color_Player_2">#CCBB11</Color>
@@ -62,7 +62,7 @@
     </TransformGroup>
 
     <DropShadowEffect x:Key="A_Effect_DropShadow" ShadowDepth="1" Direction="-45" Color="Black" Opacity="0.66" BlurRadius="1" RenderingBias="Quality" />
-    
+
     <FontFamily x:Key="Roboto">pack://application:,,,/Ui/Fonts/#Roboto</FontFamily>
 
     <Style x:Key="A_Style_TextBlock_Heading" TargetType="TextBlock">
@@ -117,7 +117,7 @@
                         <Path.Data>
                             <PathGeometry>
                                 <PathFigure StartPoint="5,0">
-                                    <ArcSegment RotationAngle="0" SweepDirection="Clockwise" Size="5,5" 
+                                    <ArcSegment RotationAngle="0" SweepDirection="Clockwise" Size="5,5"
                                                 Point="{Binding Angle, Converter={StaticResource A_Converter_AngleToPoint}, ConverterParameter=5}"
                                                 IsLargeArc="{Binding Angle, Converter={StaticResource A_Converter_AngleToIsLargeArc}}" />
                                 </PathFigure>
@@ -249,7 +249,7 @@
                 </EasingDoubleKeyFrame.EasingFunction>
             </EasingDoubleKeyFrame>
         </DoubleAnimationUsingKeyFrames>
-        
+
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Pulse" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
             <EasingDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
             <EasingDoubleKeyFrame KeyTime="00:00:00.25" Value="1">
@@ -309,7 +309,7 @@
                             <SolidColorBrush Color="#FFFFF300" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    
+
                     <ContentControl Name="IsActiveGraphic" Width="13" Content="!" VerticalAlignment="Center" HorizontalAlignment="Left" ContentTemplate="{StaticResource A_DataTemplate_SquareInfoGraphic}" RenderTransformOrigin="0.5 0.5">
                         <ContentControl.RenderTransform>
                             <TransformGroup>
@@ -750,6 +750,19 @@
 
             <StackPanel>
                 <StackPanel HorizontalAlignment="Center">
+                    <Grid>
+                        <TextBlock Style="{StaticResource A_Style_TextBlock_Standard}" Foreground="{StaticResource A_Brush_DropShadow}" RenderTransform="{StaticResource A_Transform_DropShadow}" >
+                            <TextBlock.Text>
+                                <Binding Path="Size" ConverterParameter="{0:.2f}" Converter="{StaticResource A_Converter_StringFormat}" Mode="OneWay"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource A_Style_TextBlock_Standard}">
+                            <TextBlock.Text>
+                                <Binding Path="Size" ConverterParameter="{0:.2f}" Converter="{StaticResource A_Converter_StringFormat}" Mode="OneWay"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+
                     <Grid Name="Crown" Height="20">
                         <Grid Name="InnerCrown" VerticalAlignment="Bottom">
                             <ContentControl ContentTemplate="{StaticResource A_Graphic_Crown}" Background="#000000" Foreground="#000000" Opacity="0.5" RenderTransform="{StaticResource A_Transform_DropShadow}" />
@@ -764,7 +777,7 @@
                             </ContentControl>
                         </Grid>
                     </Grid>
-                    
+
                     <Grid VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding Name}" Style="{StaticResource A_Style_TextBlock_Heading}" Foreground="{StaticResource A_Brush_DropShadow}" RenderTransform="{StaticResource A_Transform_DropShadow}" />
                         <TextBlock Text="{Binding Name}" Style="{StaticResource A_Style_TextBlock_Heading}" />
@@ -777,7 +790,7 @@
                             <SolidColorBrush Color="{StaticResource A_Color_Monster_Bar}" />
                         </ContentControl.Foreground>
                     </ContentControl>
-                    
+
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 2 0 0">
                         <TextBlock Name="HealthBlockShadow" Style="{StaticResource A_Style_TextBlock_Standard}" Foreground="{StaticResource A_Brush_DropShadow}" RenderTransform="{StaticResource A_Transform_DropShadow}">
                             <TextBlock.Text>
@@ -811,7 +824,7 @@
                 <Setter TargetName="Root" Property="Opacity" Value="1" />
                 <Setter TargetName="PartsControl" Property="ItemsSource" Value="{Binding Parts}" />
             </Trigger>
-            
+
             <DataTrigger Binding="{Binding IsVisible}" Value="True">
                 <DataTrigger.EnterActions>
                     <StopStoryboard BeginStoryboardName="Hide" />
@@ -884,7 +897,7 @@
                     </Setter.Value>
                 </Setter>
             </MultiDataTrigger>
-            
+
             <!--Show NOT Numbers AND Percents-->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -910,7 +923,7 @@
                     </Setter.Value>
                 </Setter>
             </MultiDataTrigger>
-           
+
             <!--Show NOT Numbers NOT Percents-->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -1080,7 +1093,7 @@
             <DataTrigger Binding="{Binding Damage}" Value="0">
                 <Setter TargetName="DescriptionContainer" Property="Visibility" Value="Collapsed" />
             </DataTrigger>
-            
+
             <DataTrigger Binding="{Binding ., Converter={StaticResource A_Converter_PlayerToPlayerIndex}}" Value="0">
                 <Setter TargetName="Bar" Property="Foreground">
                     <Setter.Value>
@@ -1172,7 +1185,7 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-                    
+
                     <TextBlock Name="NameBlock" Style="{StaticResource A_Style_TextBlock_Standard}">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0:0} ({1:0})">
@@ -1306,8 +1319,8 @@
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
-    
-    
+
+
     <!--Widget Controls-->
 
     <Style x:Key="A_Style_ItemsControl_Monsters" TargetType="ItemsControl">
@@ -1333,7 +1346,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="{StaticResource A_Color_Widget_Background}" />
             </Grid.Background>
-            
+
             <Grid.Resources>
                 <CollectionViewSource x:Key="CollectionViewSource" Source="{Binding Monsters}" />
             </Grid.Resources>
@@ -1373,7 +1386,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="{StaticResource A_Color_Widget_Background}" />
             </Grid.Background>
-            
+
             <Grid.Resources>
                 <CollectionViewSource x:Key="CollectionViewSource" Source="{Binding StatusEffects}" IsLiveSortingRequested="True">
                     <CollectionViewSource.LiveSortingProperties>
@@ -1422,7 +1435,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="{StaticResource A_Color_Widget_Background}" />
             </Grid.Background>
-            
+
             <Grid.Resources>
                 <CollectionViewSource x:Key="CollectionViewSource" Source="{Binding Players}" IsLiveSortingRequested="True">
                     <CollectionViewSource.LiveSortingProperties>
