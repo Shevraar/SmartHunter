@@ -8,6 +8,8 @@ using SmartHunter.Core.Helpers;
 using SmartHunter.Game.Config;
 using SmartHunter.Game.Data;
 using SmartHunter.Game.Data.ViewModels;
+using System.IO;
+using System.Text;
 
 namespace SmartHunter.Game.Helpers
 {
@@ -137,7 +139,7 @@ namespace SmartHunter.Game.Helpers
                 {
                     sourceAddress = weaponAddress;
                 }
-                
+
                 bool allConditionsPassed = true;
                 if (statusEffectConfig.Conditions != null)
                 {
@@ -300,7 +302,7 @@ namespace SmartHunter.Game.Helpers
 
             ulong tmp = monsterAddress + DataOffsets.Monster.MonsterStartOfStructOffset + DataOffsets.Monster.MonsterHealthComponentOffset;
             ulong health_component = MemoryHelper.Read<ulong>(process, tmp);
-            
+
             string id = MemoryHelper.ReadString(process, tmp + DataOffsets.MonsterModel.IdOffset, (uint)DataOffsets.MonsterModel.IdLength);
             float maxHealth = MemoryHelper.Read<float>(process, health_component + DataOffsets.MonsterHealthComponent.MaxHealth);
 
@@ -325,7 +327,18 @@ namespace SmartHunter.Game.Helpers
 
             monster = OverlayViewModel.Instance.MonsterWidget.Context.UpdateAndGetMonster(monsterAddress, id, maxHealth, currentHealth, sizeScale);
 
-            
+#if DEBUG
+            var filename = $"./dumps/{monster.Name}.txt";
+            if(maxHealth > 100 && !File.Exists(filename))
+            {
+                string [] lines = {
+                    $"MaxHealth={maxHealth}",
+                    $"SizeScale={sizeScale}"
+                }
+                File.WriteAllLines(filename, lines, Encoding.UTF8);
+            }
+#endif
+
             if (ConfigHelper.MonsterData.Values.Monsters.ContainsKey(id) && ConfigHelper.MonsterData.Values.Monsters[id].Parts.Count() > 0)
             {
                 // TODO: I think here we can check if the current player is the host of the party, as if's not there's no point on updating monster parts (cause only the host of the party will see those parts)
@@ -397,7 +410,7 @@ namespace SmartHunter.Game.Helpers
                     {
                         removablePartAddress += 8;
                     }
-                    
+
                     // This is rough/hacky but it removes seemingly valid parts that aren't actually "removable".
                     // TODO: Figure out why Paolumu, Barroth, Radobaan have these mysterious removable parts
                     bool isValid1 = true;
@@ -407,7 +420,7 @@ namespace SmartHunter.Game.Helpers
                     int validity1 = MemoryHelper.Read<int>(process, removablePartAddress + DataOffsets.MonsterRemovablePart.Validity1);
                     isValid1 = validity1 == 1;
                     if (!ConfigHelper.Main.Values.Debug.ShowWeirdRemovableParts)
-                    {                                           
+                    {
                         int validity2 = MemoryHelper.Read<int>(process, removablePartAddress + DataOffsets.MonsterRemovablePart.Validity2);
                         int validity3 = MemoryHelper.Read<int>(process, removablePartAddress + DataOffsets.MonsterRemovablePart.Validity3);
 
