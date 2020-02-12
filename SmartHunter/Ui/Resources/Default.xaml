@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -753,12 +753,16 @@
                     <Grid>
                         <TextBlock Style="{StaticResource A_Style_TextBlock_Standard}" Foreground="{StaticResource A_Brush_DropShadow}" RenderTransform="{StaticResource A_Transform_DropShadow}" >
                             <TextBlock.Text>
-                                <Binding Path="Size" ConverterParameter="{0:.2f}" Converter="{StaticResource A_Converter_StringFormat}" Mode="OneWay"/>
+                                <MultiBinding ConverterParameter="{}{0}" Converter="{StaticResource A_Converter_StringFormat}">
+                                    <Binding Path="Size" Mode="OneWay" />
+                                </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
                         <TextBlock Style="{StaticResource A_Style_TextBlock_Standard}">
                             <TextBlock.Text>
-                                <Binding Path="Size" ConverterParameter="{0:.2f}" Converter="{StaticResource A_Converter_StringFormat}" Mode="OneWay"/>
+                                <MultiBinding ConverterParameter="{}{0}" Converter="{StaticResource A_Converter_StringFormat}">
+                                    <Binding Path="Size" Mode="OneWay" />
+                                </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
                     </Grid>
