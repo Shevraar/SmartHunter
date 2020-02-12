@@ -1,0 +1,2 @@
+MaxHealth: 17690
+SizeScale: 1,05
