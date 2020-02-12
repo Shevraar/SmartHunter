@@ -334,7 +334,7 @@ namespace SmartHunter.Game.Helpers
                 string [] lines = {
                     $"MaxHealth={maxHealth}",
                     $"SizeScale={sizeScale}"
-                }
+                };
                 File.WriteAllLines(filename, lines, Encoding.UTF8);
             }
 #endif
